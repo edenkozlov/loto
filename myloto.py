@@ -27,12 +27,12 @@ pyautogui.click()
 pyautogui.moveTo(800, 290, duration=0.1)
 pyautogui.click()
 
-pyautogui.typewrite('edenkozlov@gmail.com', interval=0.05)
+pyautogui.typewrite('', interval=0.05)
 
 pyautogui.moveTo(843, 350, duration=0.1)
 pyautogui.click()
 
-pyautogui.typewrite('Azasdasd1', interval=0.05)
+pyautogui.typewrite('', interval=0.05)
 
 pyautogui.moveTo(795, 428, duration=0.1)
 pyautogui.click()
