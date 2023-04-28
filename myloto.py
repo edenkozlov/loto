@@ -10,10 +10,10 @@ import math
 
 
 # Insert cash here
-AmountOfMoney = 0.1
+AmountOfMoney = 27.6
 
 # Total lives?
-Total = 10
+Total = 3
 SafetyRate = 1/4
 
 
@@ -21,6 +21,7 @@ SafetyRate = 1/4
 Games = int(math.log2(AmountOfMoney/0.1)-1)
 
 GamesTillEnd =int(1/((19/37)**Total))/(1/SafetyRate)
+print(GamesTillEnd)
 # List of random websites to choose from
 websites = ['https://loteries.espacejeux.com/en/home']
 
@@ -100,12 +101,6 @@ while True:
     while True:
         
         
-
-
-
-
-        time.sleep(1.5)    
-        PlaceBets =  pyautogui.click(pyautogui.moveTo(365,719))
 
         #time stamp
         now = datetime.now()
