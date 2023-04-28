@@ -12,15 +12,15 @@ import math
 # Insert cash here
 AmountOfMoney = 27.6
 
-# Total lives?
-Total = 3
-SafetyRate = 1/4
+# Total lives and Safety check
+Total = 2
+SafetyRate = 1/2
 
-
-
+# Total games played and Games with safety rate
 Games = int(math.log2(AmountOfMoney/0.1)-1)
+GamesTillEnd =int((1/((19/37)**Total))/(1/SafetyRate))
 
-GamesTillEnd =int(1/((19/37)**Total))/(1/SafetyRate)
+#
 print(GamesTillEnd)
 # List of random websites to choose from
 websites = ['https://loteries.espacejeux.com/en/home']
@@ -64,21 +64,21 @@ y_coord = random.randint(0, screen_height)
 
 
 confidence_threshold = 0.9
-counter = 0
+
 winCounter = 0
-LossCounter = 0
 Lost = 'Red.png' or "greenRon.png"
 Won = 'blackRon.png'
 
 RedCounter = 0
 
-
+LossController = 0
 
 
 # DONT FORGET TO INSERT COORDINATES FOR INITIATION EDEN
 
 while True:
-
+   
+    LossCounter = 0
     # first loop to scope out the right time to enter
     while True:
         if LossCounter >= Total:
@@ -95,11 +95,10 @@ while True:
 
 
     # place initial bet
-    time.sleep(1.5)
+    time.sleep(2)
     PlaceBets = pyautogui.click(pyautogui.moveTo(365,719))
 
     while True:
-        
         
 
         #time stamp
@@ -113,9 +112,9 @@ while True:
 
         if Win:
         
-            counter += 1
+            LossCounter=0
             winCounter += 1
-            print(f"W{winCounter} - [{counter}] @ {current_time}")
+            print(f"W{winCounter} - [{winCounter}] @ {current_time}")
             # x,y = pyautogui.locateCenterOnScreen("blackDiamond.png")
             # x = x/2
             # y=y/2 
@@ -127,11 +126,13 @@ while True:
          
 
             if winCounter >= GamesTillEnd:
+                winCounter =0
                 break
             
             # Runs the checker for reds to play again
             while True:
                 if RedCounter ==Total-Games:
+                    RedCounter =0
                     break
                 elif pyautogui.locateOnScreen(Lost, confidence=confidence_threshold):
                     RedCounter+=1
@@ -143,17 +144,22 @@ while True:
         
         image_location = pyautogui.locateOnScreen(Lost, confidence=confidence_threshold)
         if image_location:
-            print(2)
-            counter += 1
-            print(f"L - [{counter}] @ {current_time}")
+            LossCounter+=1
+            winCounter += 1
+            if LossCounter == Games:
+                break
+            print(f"L - [{winCounter}] @ {current_time}")
             pyautogui.sleep(3)
             #clicks "repeat bet and then doubles"
             pyautogui.click(pyautogui.moveTo(592, 785, duration=0.1))
+            time.sleep(0.5)
+            pyautogui.click()
 
         else:
             if pyautogui.locateOnScreen("continuePlayingEden.png")!= None:
                 pyautogui.click(pyautogui.locateCenterOnScreen("continuePlayingEden.png"))
                 print("Continued")
+
         
 
 
