@@ -1,17 +1,41 @@
+# Dont forget to change images for each person cuz stupid OCR
+# Change all PlaceBets to coorect coordinatee ( Place Bets initiates the first bet after a while loop)
 import pyautogui
 import random
 import webbrowser
 import time
 from datetime import datetime
+import math
 
+
+
+# Insert cash here
+AmountOfMoney = 0.1
+
+# Total lives?
+Total = 10
+SafetyRate = 1/4
+
+
+
+Games = int(math.log2(AmountOfMoney/0.1)-1)
+
+GamesTillEnd =int(1/((19/37)**Total))/(1/SafetyRate)
+print(GamesTillEnd)
 # List of random websites to choose from
 websites = ['https://loteries.espacejeux.com/en/home']
 
 # Open a random website from the list
-webbrowser.open(random.choice(websites))
+# webbrowser.open(random.choice(websites))
 
 # Wait for the website to load
-pyautogui.sleep(15)
+
+
+# REMEMBER
+# pyautogui.sleep(15)
+
+
+
 
 # Get the screen size
 screen_width, screen_height = pyautogui.size()
@@ -42,49 +66,106 @@ y_coord = random.randint(0, screen_height)
 confidence_threshold = 0.9
 counter = 0
 winCounter = 0
+LossCounter = 0
+Lost = 'Red.png' or "green.png"
+Won = 'Niga.png'
 
+RedCounter = 0
+
+
+
+
+# DONT FORGET TO INSERT COORDINATES FOR INITIATION EDEN
 
 while True:
-    
-    #time stamp
-    now = datetime.now()
-    current_time = now.strftime("%H:%M:%S.%f")
-    
-    # Check for the first image
-    target_image = 'black.png'
-    image_location = pyautogui.locateOnScreen(target_image, confidence=confidence_threshold)
-    if image_location:
-        counter += 1
-        winCounter += 1
-        print(f"W{winCounter} - [{counter}] @ {current_time}")
-        x,y = pyautogui.locateCenterOnScreen("blackDiamond.png")
-        x = x/2
-        y=y/2       
-        pyautogui.moveTo(x,y)
-        #pyautogui.click()
-        time.sleep(0.5)
-        #pyautogui.click()
-        #makes sure the "you lost" function doesnt get excecuted right after
-        time.sleep(8)
-        
-        if winCounter >= 30:
+
+    # first loop to scope out the right time to enter
+    while True:
+        if LossCounter >= Total:
             break
+        elif pyautogui.locateOnScreen(Lost, confidence=confidence_threshold):
+            LossCounter = LossCounter +1 
+            print(LossCounter)
+            time.sleep(2)
+        elif pyautogui.locateOnScreen(Won, confidence=confidence_threshold):
+            LossCounter=0
+            print(LossCounter)
+            time.sleep(2)
 
-    # Check for the second image
-    target_image = 'PYB.png'
-    image_location = pyautogui.locateOnScreen(target_image, confidence=confidence_threshold)
-    if image_location:
-        counter += 1
-        print(f"L - [{counter}] @ {current_time}")
-        pyautogui.sleep(1.5)
-        #clicks "repeat bet and then doubles"
-        pyautogui.moveTo(463, 574, duration=0.1)
-        #pyautogui.click()
-        pyautogui.sleep(0.5)
-        #pyautogui.click()
+
+
+    # place initial bet
+    time.sleep(1.5)
+    PlaceBets = pyautogui.moveTo(365,719)
+
+    while True:
         
-        time.sleep(6.5)
-       
+        
+
+
+
+
+        time.sleep(1.5)    
+        PlaceBets = pyautogui.moveTo(365,719)
+
+        #time stamp
+        now = datetime.now()
+        current_time = now.strftime("%H:%M:%S.%f")
+
+        # Check for the first image
+        
+        Win = pyautogui.locateOnScreen(Won, confidence=confidence_threshold)
+
+
+        if Win:
+        
+            counter += 1
+            winCounter += 1
+            print(f"W{winCounter} - [{counter}] @ {current_time}")
+            # x,y = pyautogui.locateCenterOnScreen("blackDiamond.png")
+            # x = x/2
+            # y=y/2 
+            time.sleep(3)      
+            pyautogui.moveTo(365,719)
+           
+            #pyautogui.click()
+         
+         
+
+            if winCounter >= 30:
+                break
+            
+            # Runs the checker for reds to play again
+            while True:
+                if RedCounter ==Total-Games:
+                    break
+                elif pyautogui.locateOnScreen(Lost, confidence=confidence_threshold):
+                    RedCounter+=1
+                    time.sleep(2)
+            continue
 
         
+        # Check for the second image
+        
+        image_location = pyautogui.locateOnScreen(Lost, confidence=confidence_threshold)
+        if image_location:
+            print(2)
+            counter += 1
+            print(f"L - [{counter}] @ {current_time}")
+            pyautogui.sleep(3)
+            #clicks "repeat bet and then doubles"
+            pyautogui.moveTo(592, 785, duration=0.1)
+
+        else:
+            if pyautogui.locateOnScreen("continuePlaying.png")!= None:
+                pyautogui.click(pyautogui.locateCenterOnScreen("continuePlaying.png"))
+                print("Continued")
+        
+
+
+
+
+
+
+
 
