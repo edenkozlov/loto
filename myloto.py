@@ -21,7 +21,6 @@ SafetyRate = 1/4
 Games = int(math.log2(AmountOfMoney/0.1)-1)
 
 GamesTillEnd =int(1/((19/37)**Total))/(1/SafetyRate)
-print(GamesTillEnd)
 # List of random websites to choose from
 websites = ['https://loteries.espacejeux.com/en/home']
 
@@ -67,8 +66,8 @@ confidence_threshold = 0.9
 counter = 0
 winCounter = 0
 LossCounter = 0
-Lost = 'Red.png' or "green.png"
-Won = 'Niga.png'
+Lost = 'Red.png' or "greenRon.png"
+Won = 'blackRon.png'
 
 RedCounter = 0
 
@@ -96,7 +95,7 @@ while True:
 
     # place initial bet
     time.sleep(1.5)
-    PlaceBets = pyautogui.moveTo(365,719)
+    PlaceBets = pyautogui.click(pyautogui.moveTo(365,719))
 
     while True:
         
@@ -106,7 +105,7 @@ while True:
 
 
         time.sleep(1.5)    
-        PlaceBets = pyautogui.moveTo(365,719)
+        PlaceBets =  pyautogui.click(pyautogui.moveTo(365,719))
 
         #time stamp
         now = datetime.now()
@@ -126,13 +125,13 @@ while True:
             # x = x/2
             # y=y/2 
             time.sleep(3)      
-            pyautogui.moveTo(365,719)
+            pyautogui.click(pyautogui.moveTo(365,719))
            
             #pyautogui.click()
          
          
 
-            if winCounter >= 30:
+            if winCounter >= GamesTillEnd:
                 break
             
             # Runs the checker for reds to play again
@@ -154,11 +153,11 @@ while True:
             print(f"L - [{counter}] @ {current_time}")
             pyautogui.sleep(3)
             #clicks "repeat bet and then doubles"
-            pyautogui.moveTo(592, 785, duration=0.1)
+            pyautogui.click(pyautogui.moveTo(592, 785, duration=0.1))
 
         else:
-            if pyautogui.locateOnScreen("continuePlaying.png")!= None:
-                pyautogui.click(pyautogui.locateCenterOnScreen("continuePlaying.png"))
+            if pyautogui.locateOnScreen("continuePlayingEden.png")!= None:
+                pyautogui.click(pyautogui.locateCenterOnScreen("continuePlayingEden.png"))
                 print("Continued")
         
 
